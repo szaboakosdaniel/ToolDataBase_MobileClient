@@ -4,6 +4,7 @@ package com.mobiletooldatabaseclient;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -40,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
            public void onClick(View view) {
                email = emailTxt.getText().toString();
                password=passTxt.getText().toString();
-               System.out.println("adfadsf");
                String authToken =createAuthToken(email,password);
                checkLoginDetails(authToken);
            }
@@ -59,9 +59,10 @@ public class MainActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     if(response.body().matches("succes")){
                         Toast.makeText(getApplicationContext(),"Succes",Toast.LENGTH_LONG).show();
+                        openInfoActivity();
                     }
                 }else{
-
+                    Toast.makeText(getApplicationContext(),"Incorrect Username or Password",Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -71,6 +72,11 @@ public class MainActivity extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+    }
+
+    private void openInfoActivity() {
+        Intent intent = new Intent(this, InfoActivity.class);
+        startActivity(intent);
     }
 
     private String createAuthToken(String email, String password) {
