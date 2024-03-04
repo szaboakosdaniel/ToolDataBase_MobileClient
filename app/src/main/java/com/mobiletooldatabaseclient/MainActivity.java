@@ -25,12 +25,16 @@ public class MainActivity extends AppCompatActivity {
     private Button button;
     private EditText emailTxt, passTxt;
 
-    private String email, password;
+
+    private AuthToken token;
+
+   // private String email, password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        token=AuthToken.getTokenInstance();
         button=findViewById(R.id.button);
        emailTxt=findViewById(R.id.editText);
        passTxt=findViewById(R.id.editText2);
@@ -39,10 +43,9 @@ public class MainActivity extends AppCompatActivity {
        button.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               email = emailTxt.getText().toString();
-               password=passTxt.getText().toString();
-               String authToken =createAuthToken(email,password);
-               checkLoginDetails(authToken);
+               token.setEmail(emailTxt.getText().toString());
+               token.setPassword(passTxt.getText().toString());
+               checkLoginDetails(token.createAuthToken());
            }
        });
 
@@ -59,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     if(response.body().matches("succes")){
                         Toast.makeText(getApplicationContext(),"Succes",Toast.LENGTH_LONG).show();
-                        openInfoActivity();
+                        //openInfoActivity();
+                        openScanActivity();
                     }
                 }else{
                     Toast.makeText(getApplicationContext(),"Incorrect Username or Password",Toast.LENGTH_LONG).show();
@@ -74,18 +78,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void openInfoActivity() {
-        Intent intent = new Intent(this, InfoActivity.class);
+
+
+    private void openScanActivity() {
+        Intent intent = new Intent(this, ScanActivity.class);
         startActivity(intent);
     }
 
-    private String createAuthToken(String email, String password) {
-        byte [] data =new byte[0];
-        try{
-            data =(email + ":" +password).getBytes("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return "Basic " + Base64.encodeToString(data,Base64.NO_WRAP);
-    }
+
 }
