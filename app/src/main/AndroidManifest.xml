@@ -46,7 +46,7 @@
             android:name=".activites.InfoActivity"
             android:exported="false" />
         <activity
-            android:name=".activites.MainActivity"
+            android:name=".activites.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
