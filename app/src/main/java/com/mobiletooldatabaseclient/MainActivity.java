@@ -24,8 +24,6 @@ import retrofit2.Retrofit;
 public class MainActivity extends AppCompatActivity {
     private Button button;
     private EditText emailTxt, passTxt;
-
-
     private AuthToken token;
 
    // private String email, password;

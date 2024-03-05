@@ -38,7 +38,7 @@ public class InfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_info);
         setLocation =findViewById(R.id.setLocation);
         setLocation.setOnClickListener(v-> {
-            //openScanActivity();
+            openLocationActivity();
         });
 
         back =findViewById(R.id.back);
@@ -70,6 +70,7 @@ public class InfoActivity extends AppCompatActivity {
             public void onResponse(Call<SampleComposite> call, Response<SampleComposite> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     SampleComposite sampleComposite = response.body();
+                    instance.setSample(sampleComposite);
                     // Update your TextViews here
                     sampleid.setText(String.valueOf(sampleComposite.getSampleId()));
                     scode.setText(String.valueOf(sampleComposite.getScode()));
@@ -95,6 +96,10 @@ public class InfoActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void openLocationActivity() {
+        Intent intent = new Intent(this, LocationActivity.class);
+        startActivity(intent);
+    }
 
 
 }

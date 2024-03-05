@@ -38,17 +38,6 @@ public class ScanActivity extends AppCompatActivity {
     }
 
     ActivityResultLauncher<ScanOptions> barLaucher= registerForActivityResult(new ScanContract(), result -> {
-/*        if(result.getContents() !=null){
-            AlertDialog.Builder builder =new AlertDialog.Builder(ScanActivity.this);
-            builder.setTitle("Result");
-            builder.setMessage(result.getContents());
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int which) {
-                    dialogInterface.dismiss();
-                }
-            }).show();
-        }*/
 
         if (result.getContents() != null) {
             // Indítsa el az InfoActivity-t és adja át az eredményt
