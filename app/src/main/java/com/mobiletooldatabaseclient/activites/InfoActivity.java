@@ -1,20 +1,17 @@
 package com.mobiletooldatabaseclient.activites;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.mobiletooldatabaseclient.AuthToken;
+import androidx.annotation.NonNull;
+
 import com.mobiletooldatabaseclient.R;
 import com.mobiletooldatabaseclient.RetrofitClientInstance;
-import com.mobiletooldatabaseclient.model.SampleComposite;
-import com.mobiletooldatabaseclient.ScanResult;
 import com.mobiletooldatabaseclient.interfaces.InterfaceAPI;
+import com.mobiletooldatabaseclient.model.SampleComposite;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,36 +22,19 @@ public class InfoActivity extends BaseActivity {
 
     private TextView sampleid,scode,samplePhase,location,projectName,assemblyId;
 
-    private AuthToken token;
-
-    private ScanResult instance;
-
-   private Button setLocation;
-
-    private Button back;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        instance = ScanResult.getInstance();
+
         setContentView(R.layout.activity_info);
-        setLocation =findViewById(R.id.setLocation);
-        setLocation.setOnClickListener(v-> {
-            openLocationActivity();
-            finish();
-        });
+        Button setLocation = findViewById(R.id.setLocation);
+        setLocation.setOnClickListener((View v) -> openLocationActivity());
 
-        back =findViewById(R.id.back);
-        back.setOnClickListener(v-> {
-            openScanActivity();
-            finish();
-        });
+        Button back = findViewById(R.id.back);
+        back.setOnClickListener(v-> openScanActivity());
 
-        // Az Intent-ből származó extra adatok olvasása
-        //  int scanResult = getIntent().getIntExtra("scanResult",0);
 
-        token=AuthToken.getTokenInstance();
         // Initialize your TextViews
         sampleid = findViewById(R.id.sampleid);
         scode = findViewById(R.id.scode);
@@ -72,7 +52,7 @@ public class InfoActivity extends BaseActivity {
         call.enqueue(new Callback<SampleComposite>() {
 
             @Override
-            public void onResponse(Call<SampleComposite> call, Response<SampleComposite> response) {
+            public void onResponse(@NonNull Call<SampleComposite> call, @NonNull Response<SampleComposite> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     SampleComposite sampleComposite = response.body();
                     instance.setSample(sampleComposite);
@@ -86,27 +66,20 @@ public class InfoActivity extends BaseActivity {
                 } else {
                     showToast("Sample not found or error in response");
                     openScanActivity();
-                    finish();
                 }
             }
 
             @Override
-            public void onFailure(Call<SampleComposite> call, Throwable t) {
+            public void onFailure(@NonNull Call<SampleComposite> call, @NonNull Throwable t) {
                 Log.e("InfoActivity", "Error fetching sample info", t);
                 showToast("Error fetching sample info");
             }
         });
     }
 
-    private void openScanActivity() {
-        Intent intent = new Intent(this, ScanActivity.class);
-        startActivity(intent);
-    }
 
-    private void openLocationActivity() {
-        Intent intent = new Intent(this, LocationActivity.class);
-        startActivity(intent);
-    }
+
+
 
 
 }

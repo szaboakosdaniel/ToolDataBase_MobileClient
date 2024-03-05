@@ -2,11 +2,11 @@ package com.mobiletooldatabaseclient;
 
 import android.util.Base64;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 public class AuthToken {
     private static AuthToken token;
-    private String email;
+    private String user;
     private String password;
 
     private AuthToken() {
@@ -19,16 +19,8 @@ public class AuthToken {
         return token;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
+    public void setUser(String user) {
+        this.user = user;
     }
 
     public void setPassword(String password) {
@@ -36,12 +28,8 @@ public class AuthToken {
     }
 
     public String createAuthToken() {
-        byte [] data =new byte[0];
-        try{
-            data =(email + ":" +password).getBytes("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        byte [] data;
+        data =(user + ":" +password).getBytes(StandardCharsets.UTF_8);
         return "Basic " + Base64.encodeToString(data,Base64.NO_WRAP);
     }
 }

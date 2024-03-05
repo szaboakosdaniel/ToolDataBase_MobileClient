@@ -2,19 +2,16 @@ package com.mobiletooldatabaseclient.model;
 
 public class SampleComposite {
 
-    private long sampleId;
-    private Integer scode;
-    private String samplePhase;
+    private final long sampleId;
+    private final Integer scode;
+    private final String samplePhase;
     private Integer location;
 
     // Plusz információk a Sample-hoz
-    private String projectName;
-    private long assemblyId;
+    private final String projectName;
+    private final long assemblyId;
 
     // Konstruktorok, getterek és setterek
-
-    public SampleComposite() {
-    }
 
     // Tegyük fel, hogy ezeket az adatokat egy JOIN lekérdezésből kapjuk
     public SampleComposite(Long sampleId, Integer scode, String samplePhase, Integer location, String projectName, Long assemblyId) {
@@ -32,24 +29,12 @@ public class SampleComposite {
         return sampleId;
     }
 
-    public void setSampleId(Long sampleId) {
-        this.sampleId = sampleId;
-    }
-
     public Integer getScode() {
         return scode;
     }
 
-    public void setScode(Integer scode) {
-        this.scode = scode;
-    }
-
     public String getSamplePhase() {
         return samplePhase;
-    }
-
-    public void setSamplePhase(String samplePhase) {
-        this.samplePhase = samplePhase;
     }
 
     public Integer getLocation() {
@@ -64,17 +49,8 @@ public class SampleComposite {
         return projectName;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
-    }
-
     public Long getAssemblyId() {
         return assemblyId;
     }
 
-    public void setAssemblyId(Long assemblyId) {
-        this.assemblyId = assemblyId;
-    }
-
-    // További getterek és setterek
 }

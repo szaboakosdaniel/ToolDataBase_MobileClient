@@ -1,22 +1,16 @@
 package com.mobiletooldatabaseclient.activites;
 
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.mobiletooldatabaseclient.AuthToken;
+import androidx.annotation.NonNull;
+
 import com.mobiletooldatabaseclient.R;
 import com.mobiletooldatabaseclient.RetrofitClientInstance;
 import com.mobiletooldatabaseclient.interfaces.InterfaceAPI;
-
-//import java.util.Base64;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,9 +18,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class MainActivity extends BaseActivity {
-    private Button button;
     private EditText username, password;
-    private AuthToken token;
 
    // private String email, password;
 
@@ -34,19 +26,15 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        token=AuthToken.getTokenInstance();
-        button=findViewById(R.id.button);
+        Button button = findViewById(R.id.button);
         username=findViewById(R.id.user);
         password=findViewById(R.id.password);
 
 
-       button.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               token.setEmail(username.getText().toString());
-               token.setPassword(password.getText().toString());
-               checkLoginDetails(token.createAuthToken());
-           }
+       button.setOnClickListener(view -> {
+           token.setUser(username.getText().toString());
+           token.setPassword(password.getText().toString());
+           checkLoginDetails(token.createAuthToken());
        });
 
     }
@@ -58,12 +46,12 @@ public class MainActivity extends BaseActivity {
 
         call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                 if(response.isSuccessful()){
+                    assert response.body() != null;
                     if(response.body().matches("succes")){
                         showToast("Success");
                         openScanActivity();
-                        finish();
                     }
                 }else{
                     showToast("Incorrect Username or Password");
@@ -73,18 +61,11 @@ public class MainActivity extends BaseActivity {
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
                 Log.e("TAG",t.toString());
                 t.printStackTrace();
             }
         });
-    }
-
-
-
-    private void openScanActivity() {
-        Intent intent = new Intent(this, ScanActivity.class);
-        startActivity(intent);
     }
 
 

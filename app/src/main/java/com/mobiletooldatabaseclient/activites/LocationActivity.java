@@ -1,23 +1,19 @@
 package com.mobiletooldatabaseclient.activites;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
-import android.widget.Toast;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.NonNull;
 
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
-import com.mobiletooldatabaseclient.AuthToken;
 import com.mobiletooldatabaseclient.CaptureAct;
 import com.mobiletooldatabaseclient.R;
 import com.mobiletooldatabaseclient.RetrofitClientInstance;
-import com.mobiletooldatabaseclient.model.SampleComposite;
-import com.mobiletooldatabaseclient.ScanResult;
 import com.mobiletooldatabaseclient.interfaces.InterfaceAPI;
+import com.mobiletooldatabaseclient.model.SampleComposite;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,26 +22,13 @@ import retrofit2.Retrofit;
 
 public class LocationActivity extends BaseActivity {
 
-    private Button btn_scan;
-
-    private ScanResult instance;
-
-    private AuthToken token;
-
-    private SampleComposite sample;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
-
-        instance=ScanResult.getInstance();
-        sample=instance.getSample();
-        token=AuthToken.getTokenInstance();
         setContentView(R.layout.activity_location);
-        btn_scan =findViewById(R.id.btn_scan);
-        btn_scan.setOnClickListener(v-> {
-            scanCode();
-        });
+        Button btn_scan = findViewById(R.id.btn_scan);
+        btn_scan.setOnClickListener(v-> scanCode());
     }
 
     private void scanCode() {
@@ -61,16 +44,12 @@ public class LocationActivity extends BaseActivity {
 
         if (result.getContents() != null) {
             if (result.getContents().matches("\\d+")) {
-                sample.setLocation(Integer.parseInt(result.getContents()));
-                updateSampleComposite(sample);
+                instance.getSample().setLocation(Integer.parseInt(result.getContents()));
+                updateSampleComposite(instance.getSample());
             }
             else {
-                // Kezelje az esetet, ha a sztring nem csak számokat tartalmaz
-                // Például megjeleníthet egy hibaüzenetet
-                Intent intent = new Intent(LocationActivity.this, InfoActivity.class);
                 showToast("QR code incorrect");
-                startActivity(intent);
-                finish();
+                openinfoScanActivity();
             }
         }
 
@@ -83,12 +62,11 @@ public class LocationActivity extends BaseActivity {
         Call<Void> call = api.updateSampleComposite(token.createAuthToken(), sampleComposite);
         call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 if (response.isSuccessful()) {
                     // Handle successful update
                     showToast("Sample updated successfully");
-                    Intent intent = new Intent(LocationActivity.this, InfoActivity.class);
-                    startActivity(intent);
+                    openinfoScanActivity();
                 } else {
                     // Handle failure
                     showToast("Failed to update sample");
@@ -96,7 +74,7 @@ public class LocationActivity extends BaseActivity {
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
                 Log.e("LocationActivity", "Error updating sample", t);
                 showToast("Error updating sample");
             }
