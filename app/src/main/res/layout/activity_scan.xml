@@ -13,7 +13,7 @@
         android:layout_marginStart="161dp"
         android:layout_marginEnd="162dp"
         android:layout_marginBottom="348dp"
-        android:text="Scan"
+        android:text="Scan Sample"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
