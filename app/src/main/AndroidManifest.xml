@@ -21,13 +21,32 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ScanActivity"
+            android:name=".activites.LocationActivity"
+            android:exported="false"
+            android:label="@string/title_activity_location"
+            android:theme="@style/Theme.MobileTooldatabaseClient" />
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:exported="false"
+            android:label="@string/title_activity_login" />
+        <activity
+            android:name=".ScanLocationActivity"
+            android:exported="false"
+            android:label="@string/title_activity_scan_location"
+            android:theme="@style/Theme.MobileTooldatabaseClient" />
+        <activity
+            android:name=".ScanLocation"
+            android:exported="false"
+            android:label="@string/title_activity_scan_location"
+            android:theme="@style/Theme.MobileTooldatabaseClient" />
+        <activity
+            android:name=".activites.ScanActivity"
             android:exported="false" />
         <activity
-            android:name=".InfoActivity"
+            android:name=".activites.InfoActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activites.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,11 +56,10 @@
         </activity>
         <activity
             android:name=".CaptureAct"
+            android:exported="false"
             android:screenOrientation="portrait"
             android:stateNotNeeded="true"
-            android:theme="@style/zxing_CaptureTheme"
-            android:exported="false"
-            />
+            android:theme="@style/zxing_CaptureTheme" />
     </application>
 
 </manifest>

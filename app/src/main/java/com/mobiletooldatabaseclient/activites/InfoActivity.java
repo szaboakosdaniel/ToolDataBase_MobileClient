@@ -1,24 +1,27 @@
-package com.mobiletooldatabaseclient;
+package com.mobiletooldatabaseclient.activites;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import com.mobiletooldatabaseclient.AuthToken;
+import com.mobiletooldatabaseclient.R;
+import com.mobiletooldatabaseclient.RetrofitClientInstance;
+import com.mobiletooldatabaseclient.model.SampleComposite;
+import com.mobiletooldatabaseclient.ScanResult;
+import com.mobiletooldatabaseclient.interfaces.InterfaceAPI;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class InfoActivity extends AppCompatActivity {
+public class InfoActivity extends BaseActivity {
 
     private TextView sampleid,scode,samplePhase,location,projectName,assemblyId;
 
@@ -26,9 +29,9 @@ public class InfoActivity extends AppCompatActivity {
 
     private ScanResult instance;
 
-    Button setLocation;
+   private Button setLocation;
 
-    Button back;
+    private Button back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +41,14 @@ public class InfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_info);
         setLocation =findViewById(R.id.setLocation);
         setLocation.setOnClickListener(v-> {
-            //openScanActivity();
+            openLocationActivity();
+            finish();
         });
 
         back =findViewById(R.id.back);
         back.setOnClickListener(v-> {
             openScanActivity();
+            finish();
         });
 
         // Az Intent-ből származó extra adatok olvasása
@@ -61,7 +66,7 @@ public class InfoActivity extends AppCompatActivity {
         getSampleInfo(token.createAuthToken());
     }
     private void getSampleInfo(String authToken) {
-        Retrofit retrofit=RetrofitClientInstance.getRetrofitInstance();
+        Retrofit retrofit= RetrofitClientInstance.getRetrofitInstance();
         final InterfaceAPI api=retrofit.create(InterfaceAPI.class);
         Call<SampleComposite> call = api.getSampleCompositeByScode(authToken,instance.getCode());
         call.enqueue(new Callback<SampleComposite>() {
@@ -70,6 +75,7 @@ public class InfoActivity extends AppCompatActivity {
             public void onResponse(Call<SampleComposite> call, Response<SampleComposite> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     SampleComposite sampleComposite = response.body();
+                    instance.setSample(sampleComposite);
                     // Update your TextViews here
                     sampleid.setText(String.valueOf(sampleComposite.getSampleId()));
                     scode.setText(String.valueOf(sampleComposite.getScode()));
@@ -78,14 +84,16 @@ public class InfoActivity extends AppCompatActivity {
                     projectName.setText(sampleComposite.getProjectName());
                     assemblyId.setText(String.valueOf(sampleComposite.getAssemblyId()));
                 } else {
-                    Toast.makeText(InfoActivity.this, "Sample not found or error in response", Toast.LENGTH_LONG).show();
+                    showToast("Sample not found or error in response");
+                    openScanActivity();
+                    finish();
                 }
             }
 
             @Override
             public void onFailure(Call<SampleComposite> call, Throwable t) {
                 Log.e("InfoActivity", "Error fetching sample info", t);
-                Toast.makeText(InfoActivity.this, "Error fetching sample info", Toast.LENGTH_LONG).show();
+                showToast("Error fetching sample info");
             }
         });
     }
@@ -95,6 +103,10 @@ public class InfoActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void openLocationActivity() {
+        Intent intent = new Intent(this, LocationActivity.class);
+        startActivity(intent);
+    }
 
 
 }

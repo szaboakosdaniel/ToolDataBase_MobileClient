@@ -1,19 +1,21 @@
-package com.mobiletooldatabaseclient;
+package com.mobiletooldatabaseclient.activites;
 
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.UnsupportedEncodingException;
+import com.mobiletooldatabaseclient.AuthToken;
+import com.mobiletooldatabaseclient.R;
+import com.mobiletooldatabaseclient.RetrofitClientInstance;
+import com.mobiletooldatabaseclient.interfaces.InterfaceAPI;
+
 //import java.util.Base64;
 
 import retrofit2.Call;
@@ -21,11 +23,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     private Button button;
-    private EditText emailTxt, passTxt;
-
-
+    private EditText username, password;
     private AuthToken token;
 
    // private String email, password;
@@ -36,15 +36,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         token=AuthToken.getTokenInstance();
         button=findViewById(R.id.button);
-       emailTxt=findViewById(R.id.editText);
-       passTxt=findViewById(R.id.editText2);
+        username=findViewById(R.id.user);
+        password=findViewById(R.id.password);
 
 
        button.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               token.setEmail(emailTxt.getText().toString());
-               token.setPassword(passTxt.getText().toString());
+               token.setEmail(username.getText().toString());
+               token.setPassword(password.getText().toString());
                checkLoginDetails(token.createAuthToken());
            }
        });
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkLoginDetails(String authToken) {
-        Retrofit retrofit=RetrofitClientInstance.getRetrofitInstance();
+        Retrofit retrofit= RetrofitClientInstance.getRetrofitInstance();
         final InterfaceAPI api=retrofit.create(InterfaceAPI.class);
         Call<String> call = api.checkLogin(authToken);
 
@@ -61,12 +61,14 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<String> call, Response<String> response) {
                 if(response.isSuccessful()){
                     if(response.body().matches("succes")){
-                        Toast.makeText(getApplicationContext(),"Succes",Toast.LENGTH_LONG).show();
-                        //openInfoActivity();
+                        showToast("Success");
                         openScanActivity();
+                        finish();
                     }
                 }else{
-                    Toast.makeText(getApplicationContext(),"Incorrect Username or Password",Toast.LENGTH_LONG).show();
+                    showToast("Incorrect Username or Password");
+                    username.setText("");
+                    password.setText("");
                 }
             }
 

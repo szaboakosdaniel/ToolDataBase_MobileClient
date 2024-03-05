@@ -1,4 +1,4 @@
-package com.mobiletooldatabaseclient;
+package com.mobiletooldatabaseclient.model;
 
 public class SampleComposite {
 

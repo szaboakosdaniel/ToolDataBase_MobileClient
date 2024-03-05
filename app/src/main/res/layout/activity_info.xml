@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InfoActivity">
+    tools:context=".activites.InfoActivity">
 
     <TextView
         android:id="@+id/assemblyId2"
@@ -62,7 +62,6 @@
         android:layout_height="15dp"
         android:layout_marginStart="220dp"
         android:layout_marginTop="76dp"
-        android:text="sampleid"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -72,7 +71,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="220dp"
         android:layout_marginTop="336dp"
-        android:text="assemblyId"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -82,7 +80,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="224dp"
         android:layout_marginTop="236dp"
-        android:text="location"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -92,7 +89,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="220dp"
         android:layout_marginTop="188dp"
-        android:text="samplePhase"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -102,7 +98,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="224dp"
         android:layout_marginTop="284dp"
-        android:text="projectName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -112,7 +107,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="220dp"
         android:layout_marginTop="136dp"
-        android:text="scode"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
