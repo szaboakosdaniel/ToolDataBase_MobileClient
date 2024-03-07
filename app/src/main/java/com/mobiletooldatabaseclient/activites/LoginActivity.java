@@ -82,6 +82,9 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                showToast("No response from remote server");
+                username.setText("");
+                password.setText("");
                 // Log and handle any errors during the network request
                 Log.e("TAG",t.toString());
                 t.printStackTrace();
