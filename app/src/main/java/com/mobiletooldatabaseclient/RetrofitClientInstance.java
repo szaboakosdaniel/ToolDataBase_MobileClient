@@ -1,4 +1,5 @@
 package com.mobiletooldatabaseclient;
+ import okhttp3.OkHttpClient;
  import retrofit2.Retrofit;
  import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -14,9 +15,10 @@ package com.mobiletooldatabaseclient;
  */
 public class RetrofitClientInstance {
     // Base URL for the API endpoint. This should point to the server where the API is hosted.
-    private static final String API_BASE_URL="http://10.0.2.2:8080/";
+    private static final String API_BASE_URL="https://10.0.2.2:8443/";
     // Static variable to hold the single instance of Retrofit
     private static Retrofit retrofit;
+
 
     /**
      * Provides a global access point to the Retrofit instance.
@@ -32,12 +34,15 @@ public class RetrofitClientInstance {
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
+
+            OkHttpClient okHttpClient = UnsafeOkHttpClient.getUnsafeOkHttpClient();
             // Initialize Retrofit with the API base URL and the Gson converter factory.
             // This setup is necessary for Retrofit to parse JSON responses into Java objects
             // and to serialize Java objects into JSON requests.
             retrofit= new Retrofit.Builder()
                     .baseUrl(API_BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create(gson))
+                    .client(okHttpClient)
                     .build();
         }
         return retrofit;

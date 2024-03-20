@@ -2,6 +2,8 @@ package com.mobiletooldatabaseclient.activites;
 
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -43,6 +45,14 @@ public class LoginActivity extends BaseActivity {
         password=findViewById(R.id.password);
         // Find the ProgressBar by its ID
         progressBar = findViewById(R.id.progressBar);
+
+        // Add TextChangedListener to username and password fields
+        username.addTextChangedListener(textWatcher);
+        password.addTextChangedListener(textWatcher);
+
+        // Disable the login button initially
+        button.setEnabled(false);
+
         // Setup the click listener for the login button
         button.setOnClickListener(view -> {
             // Show progress bar when login process starts
@@ -55,8 +65,7 @@ public class LoginActivity extends BaseActivity {
             token.setPassword(password.getText().toString());
             // Attempt to authenticate with the provided credentials
             checkLoginDetails(token.createAuthToken());
-       });
-
+        });
     }
 
     /**
@@ -110,5 +119,30 @@ public class LoginActivity extends BaseActivity {
             }
         });
     }
+
+    // TextWatcher for username and password fields
+    private TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            // No implementation needed
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            // No implementation needed
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            // Check if both username and password fields are not empty
+            if (!username.getText().toString().isEmpty() && !password.getText().toString().isEmpty()) {
+                // Enable the login button if both fields are not empty
+                button.setEnabled(true);
+            } else {
+                // Disable the login button if either field is empty
+                button.setEnabled(false);
+            }
+        }
+    };
 
 }

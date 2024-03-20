@@ -93,9 +93,4 @@ public class InfoActivity extends BaseActivity {
         });
     }
 
-
-
-
-
-
 }
