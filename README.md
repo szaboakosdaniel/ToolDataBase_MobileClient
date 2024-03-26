@@ -72,5 +72,10 @@ A ScanResult osztály egyetlen példányának létrehozását és kezelését v�
 ## UnsafeOkHttpClient
 Az UnsafeOkHttpClient osztály egy olyan segédosztály, amely egy "biztonsági kiskaput" nyit meg az alkalmazás számára az SSL/TLS tanúsítványok ellenőrzése alól. Ennek eredményeként az alkalmazás lehetővé teszi az összes HTTPS kérést, anélkül hogy ellenőrizné a szerver tanúsítványait. Ez kifejezetten csak fejlesztési fázis alatt szabad.
 
+##Videó
+
+
+https://github.com/szaboakosdaniel/ToolDataBase_MobileClient/assets/65349560/291a96ff-64c6-4829-a1d2-d147ab8275fe
+
 
 
