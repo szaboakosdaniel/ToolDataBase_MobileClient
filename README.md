@@ -2,7 +2,7 @@
 
 ## Beadandó ismertetése
 A beadandó feladatam egy adatbázis kezelő rendszer része. Az adatbázis célja egy fejlesztési csapat fejlesztői mintániak nyomonkövetése. Mintákat egy QR kód alapján lehet azonosítani az adatbázisban.
-A mintához több információ elérhető , össze szerelés , fázis , hogy melyik projekthez tartozik stb.
+A mintához több információ elérhető , összeszerelés , mintafázis , hogy melyik projekthez tartozik és egyébb infromációk.
 A program műküdése szempontjából a Lokáció a fontos ez a plocon megtalálható QR kód. Ez alapján lehet módosítani a minta fizikai elhelyezkedését. Ez egy hasznos funkció mert Desktop kliensben később könnyebb beazonosítani a minta elhelyezkedését.
 A Mobil Kliens egy általam készített Spring Boot Web szerverre csatlakozik. A Wep szerver egy MYSQL adatbázist kezel.
 
