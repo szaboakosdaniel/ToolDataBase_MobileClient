@@ -2,9 +2,7 @@ package com.mobiletooldatabaseclient.activites;
 
 import android.os.Bundle;
 import android.widget.Button;
-
 import androidx.activity.result.ActivityResultLauncher;
-
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 import com.mobiletooldatabaseclient.CaptureAct;
@@ -50,7 +48,7 @@ public class ScanActivity extends BaseActivity {
         // Checks if the scanned result is not null
         if (result.getContents() != null) {
             // Validates if the scanned result is a numeric value
-            if (result.getContents().matches("\\d+")) {
+            if (result.getContents().matches("\\d{1,10}")) {
                 // Parses the scanned numeric value and sets it in the instance
                 instance.setCode(Integer.parseInt(result.getContents()));
                 // Navigates to the InfoActivity to display scanned information
@@ -58,11 +56,10 @@ public class ScanActivity extends BaseActivity {
             } else {
                 // Shows a toast message for incorrect QR code format
                 showToast("QR code incorrect");
-                // Optionally, navigates back to the InfoActivity or handles the error differently
-                openinfoScanActivity();
+                // Optionally, navigates back to the openScanActivity or handles the error differently
+                openScanActivity();
             }
         }
-
     });
 
 }

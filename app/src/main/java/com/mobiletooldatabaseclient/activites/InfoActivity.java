@@ -78,6 +78,12 @@ public class InfoActivity extends BaseActivity {
                     projectName.setText(sampleComposite.getProjectName());
                     assemblyId.setText(String.valueOf(sampleComposite.getAssemblyId()));
                 } else {
+                    sampleid.setText("");
+                    scode.setText("");
+                    samplePhase.setText("");
+                    location.setText("");
+                    projectName.setText("");
+                    assemblyId.setText("");
                     // Handling cases where the sample is not found or there is an error in response.
                     showToast("Sample not found or error in response");
                     openScanActivity();

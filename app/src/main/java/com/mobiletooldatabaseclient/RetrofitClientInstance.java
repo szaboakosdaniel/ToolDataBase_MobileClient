@@ -15,7 +15,7 @@ package com.mobiletooldatabaseclient;
  */
 public class RetrofitClientInstance {
     // Base URL for the API endpoint. This should point to the server where the API is hosted.
-    private static final String API_BASE_URL="https://10.0.2.2:8443/";
+    private static final String API_BASE_URL="https://152.67.66.185:8443/";
     // Static variable to hold the single instance of Retrofit
     private static Retrofit retrofit;
 
