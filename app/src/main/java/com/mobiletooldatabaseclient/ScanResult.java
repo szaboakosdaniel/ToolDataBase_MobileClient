@@ -78,4 +78,13 @@ public class ScanResult {
     public void setSample(SampleComposite sample) {
         this.sample = sample;
     }
+
+    /**
+     * Resets all variables in the ScanResult instance to their default values or null.
+     * This method effectively clears the scan result data.
+     */
+    public void reset() {
+        this.sample = null;
+        this.code = 0; // or whatever default value makes sense for your application
+    }
 }
